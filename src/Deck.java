@@ -1,12 +1,6 @@
-//////////////////////////////////////////////////////////////////////////////////
-//								RISK PROJECT									//
-//								  CECS 343										//
-//------------------------------------------------------------------------------//
-//								TEAM MEMBERS:									//
-//								Joseph Buss										//
-//								John Gallego									//
-//								Jonathan Stoner									//
-//////////////////////////////////////////////////////////////////////////////////
+// Risk Project - CECS 343
+// Joseph Buss, John Gallego, Jonathan Stoner
+
 import java.util.Collections;
 import java.util.ArrayList;
 

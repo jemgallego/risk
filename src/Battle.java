@@ -1,34 +1,22 @@
-//////////////////////////////////////////////////////////////////////////////////
-//								RISK PROJECT									//
-//								  CECS 343										//
-//------------------------------------------------------------------------------//
-//								TEAM MEMBERS:									//
-//								Joseph Buss										//
-//								John Gallego									//
-//								Jonathan Stoner									//
-//////////////////////////////////////////////////////////////////////////////////
+// Risk Project - CECS 343
+// Joseph Buss, John Gallego, Jonathan Stoner
+
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class Battle extends JPanel implements ActionListener
 {	
-	//used for inputing images
-	private JFileChooser tempFC = new JFileChooser();
 
 	//JPanel
 	private JPanel dice_pnl = new JPanel();
@@ -77,13 +65,7 @@ public class Battle extends JPanel implements ActionListener
 		this.setVisible(true);
 		this.setLayout(null);
 		this.setBackground(Color.black);
-		
-		//initialize image file path
-		tempFC.setCurrentDirectory(new File("C:"));
-        String tempFP = tempFC.getCurrentDirectory().getAbsolutePath();
-        tempFC.setCurrentDirectory(new File(tempFP));
-
-    			
+				
 ////////////////////////////////////////////////////////////////////////////////
 /**/		
 		// Dice Placement
@@ -340,7 +322,7 @@ public class Battle extends JPanel implements ActionListener
 		remainingAttackers_lbl.setText(a.getArmy().getNumberOfUnits()+" Units Remaining");
 		remainingDefenders_lbl.setText(d.getArmy().getNumberOfUnits()+" Units Remaining");
 
-		Game_Core.status.setText("<html>Attacker Suffered<br>" 
+		GameCore.status.setText("<html>Attacker Suffered<br>" 
 				+ attackerCasualties + " Casualties<br>"
 				+ "Defender Suffered<br>" 
 				+ defenderCasualties + " Casualties"
@@ -391,11 +373,11 @@ public class Battle extends JPanel implements ActionListener
 	}
 	private void endOfBattle(String message, boolean retval)
 	{
-		Game_Core.t1 = a;
-		Game_Core.t2 = d;
-		Game_Core.battleRaging = false;
+		GameCore.t1 = a;
+		GameCore.t2 = d;
+		GameCore.battleRaging = false;
 		if(retval == true)
-		Game_Core.territoryConquered = retval;
+		GameCore.territoryConquered = retval;
 
 		battle_pnl.setVisible(false);
 		attacker_pnl.setVisible(false);
@@ -425,8 +407,7 @@ public class Battle extends JPanel implements ActionListener
 	    	BufferedImage img = null;
 	    	try 
 	    	{
-	    	    img = ImageIO.read(new File(tempFC.getCurrentDirectory().getAbsolutePath()
-	    				+ "\\src\\Images\\" + fileName));
+	    	    img = ImageIO.read(new File("images/" + fileName));
 	    	} 
 	    	catch (IOException e) 
 	    	{
@@ -447,8 +428,7 @@ public class Battle extends JPanel implements ActionListener
 	    	BufferedImage img = null;
 	    	try 
 	    	{
-	    	    img = ImageIO.read(new File(tempFC.getCurrentDirectory().getAbsolutePath()
-	    				+ "\\src\\Images\\" + fileName));
+	    	    img = ImageIO.read(new File("images/" + fileName));
 	    	} 
 	    	catch (IOException e) 
 	    	{

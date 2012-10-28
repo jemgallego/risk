@@ -1,12 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////
-//								RISK PROJECT									//
-//								  CECS 343										//
-//------------------------------------------------------------------------------//
-//								TEAM MEMBERS:									//
-//								Joseph Buss										//
-//								John Gallego									//
-//								Jonathan Stoner									//
-//////////////////////////////////////////////////////////////////////////////////
+// Risk Project - CECS 343
+// Joseph Buss, John Gallego, Jonathan Stoner
 
 import java.awt.Color;
 import java.awt.Container;
@@ -25,444 +18,431 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class Game_Setup extends JFrame implements ActionListener
+public class GameSetup extends JFrame implements ActionListener
 {	
     private Container container = getContentPane();	
+    private JButton startGameButton = new JButton();
 
-    //GUI COMPONENTS
-    private JButton cf_Confirm_btn = new JButton();
-
+    // Game Type Panel 
+    private JPanel gameTypePanel = new JPanel();
+    private JLabel gameTypeLabel = new JLabel(); 
+    private ButtonGroup gameTypeOption = new ButtonGroup();
+    private JRadioButton TwoPlayerOption = new JRadioButton();
+    private JRadioButton MissionOption = new JRadioButton();
+    private JRadioButton ConquestOption = new JRadioButton();
+    
     //RADIO BUTTONS FOR SELECTING NUMBER OF PLAYERS
-    private JRadioButton np_2Players_rad = new JRadioButton();
-    private JRadioButton np_3Players_rad = new JRadioButton();
-    private JRadioButton np_4Players_rad = new JRadioButton();
-    private JRadioButton np_5Players_rad = new JRadioButton();
-    private JRadioButton np_6Players_rad = new JRadioButton();
-    private int numberOfPlayers_int = 6;
+    private JPanel numberOfPlayersPanel = new JPanel();
+    private JLabel numberOfPlayersLabel = new JLabel();
+    private ButtonGroup numberOfPlayersOption = new ButtonGroup();
+    private JRadioButton TwoPlayerGame = new JRadioButton();
+    private JRadioButton ThreePlayerGame = new JRadioButton();
+    private JRadioButton FourPlayerGame = new JRadioButton();
+    private JRadioButton FivePlayerGame = new JRadioButton();
+    private JRadioButton SixPlayerGame = new JRadioButton();
+
+    private int numberOfPlayers = 6; // Default number of players
 
     //COLOR CHOICES
-	String p_Colors[] = {"Red","Pink","Yellow","Green","Blue","Black"};
-	Color p_Colors_[] = {Color.RED,Color.PINK,Color.YELLOW,Color.GREEN,Color.BLUE,Color.BLACK};
+	String colorNames[] = {"Red","Pink","Yellow","Green","Blue","Black"};
+	Color color[] = {Color.RED,Color.PINK,Color.YELLOW,Color.GREEN,Color.BLUE,Color.BLACK};
 
 	//Player 1
-	JPanel p1_pnl = new JPanel();
-    JButton p1_Type_btn = new JButton();
-    JTextField p1_Name_txt = new JTextField();
-    JComboBox p1_Color_cmb = new JComboBox(p_Colors);
-	int p1_Color_int = 0;
+	JPanel player1Panel = new JPanel();
+    JButton player1Toggle = new JButton();
+    JTextField player1Name = new JTextField();
+    JComboBox player1ComboBox = new JComboBox(colorNames);
+	int player1Color = 0;
 
     //Player 2
-	JPanel p2_pnl = new JPanel();
-    JButton p2_Type_btn = new JButton();
-    JTextField p2_Name_txt = new JTextField();
-    JComboBox p2_Color_cmb = new JComboBox(p_Colors);
-	int p2_Color_int = 1;
+	JPanel player2Panel = new JPanel();
+    JButton player2Toggle = new JButton();
+    JTextField player2Name = new JTextField();
+    JComboBox player2ComboBox = new JComboBox(colorNames);
+	int player2Color = 1;
 	
     //Player 3
-	JPanel p3_pnl = new JPanel();
-    JButton p3_Type_btn = new JButton();
-    JTextField p3_Name_txt = new JTextField();
-    JComboBox p3_Color_cmb = new JComboBox(p_Colors);
-	int p3_Color_int = 2;
+	JPanel player3Panel = new JPanel();
+    JButton player3Toggle = new JButton();
+    JTextField player3Name = new JTextField();
+    JComboBox player3ComboBox = new JComboBox(colorNames);
+	int player3Color = 2;
 	
     //Player 4
-	JPanel p4_pnl = new JPanel();
-    JButton p4_Type_btn = new JButton();
-    JTextField p4_Name_txt = new JTextField();
-    JComboBox p4_Color_cmb = new JComboBox(p_Colors);
-	int p4_Color_int = 3;
+	JPanel player4Panel = new JPanel();
+    JButton player4Toggle = new JButton();
+    JTextField player4Name = new JTextField();
+    JComboBox player4ComboBox = new JComboBox(colorNames);
+	int player4Color = 3;
 
     //Player 5
-	JPanel p5_pnl = new JPanel();
-    JButton p5_Type_btn = new JButton();
-    JTextField p5_Name_txt = new JTextField();
-    JComboBox p5_Color_cmb = new JComboBox(p_Colors);
-	int p5_Color_int = 4;
+	JPanel player5Panel = new JPanel();
+    JButton player5Toggle = new JButton();
+    JTextField player5Name = new JTextField();
+    JComboBox player5ComboBox = new JComboBox(colorNames);
+	int player5Color = 4;
 	
     //Player 6
-	JPanel p6_pnl = new JPanel();
-    JButton p6_Type_btn = new JButton();
-    JTextField p6_Name_txt = new JTextField();
-    JComboBox p6_Color_cmb = new JComboBox(p_Colors);
-	int p6_Color_int = 5;
+	JPanel player6Panel = new JPanel();
+    JButton player6Toggle = new JButton();
+    JTextField player6Name = new JTextField();
+    JComboBox player6ComboBox = new JComboBox(colorNames);
+	int player6Color = 5;
 
-	public Game_Setup()
+	public GameSetup()
 	{
 		this.setSize(420,520);
 		this.setVisible(true);
-		this.setLocation(300, 200);
+		this.setLocation(600, 200);
 		this.setTitle("RISK: 2003 Edition");
 
     	container.setLayout(null);
-    	container.setBackground(Color.LIGHT_GRAY);
-
-//Declare Game Type GUI components
-    	JPanel gt_pnl = new JPanel();
-    	gt_pnl.setBounds(0,0,200,100);
-    	gt_pnl.setBackground(Color.LIGHT_GRAY);
-    	gt_pnl.setLayout(null);
-    	this.add(gt_pnl);
+  
+    	// SETUP: Game Type Panel
+    	gameTypePanel.setBounds(0,0,200,100);
+    	gameTypePanel.setLayout(null);
+    	this.add(gameTypePanel);
     	
-        JLabel gt_Prompt_lbl = new JLabel();
-        gt_Prompt_lbl.setText("Game Type:");
-        gt_Prompt_lbl.setBounds(10,10,210,20);
-        gt_pnl.add(gt_Prompt_lbl);
+        gameTypeLabel.setText("Game Type:");
+        gameTypeLabel.setBounds(10,10,210,20);
+        gameTypePanel.add(gameTypeLabel);
         
-        ButtonGroup gt_RadioButtons_grp = new ButtonGroup();
-        
-        JRadioButton gt_2Player_rad = new JRadioButton();
-        gt_2Player_rad.setText("2-Player");
-        gt_2Player_rad.setBounds(10,30,100,20);
-        gt_2Player_rad.setEnabled(false);
-        gt_2Player_rad.addActionListener(this);
-        gt_RadioButtons_grp.add(gt_2Player_rad);
-        gt_pnl.add(gt_2Player_rad);
+        TwoPlayerOption.setText("2-Player");
+        TwoPlayerOption.setBounds(10,30,100,20);
+        TwoPlayerOption.setEnabled(false);
+        TwoPlayerOption.addActionListener(this);
+        gameTypeOption.add(TwoPlayerOption);
+        gameTypePanel.add(TwoPlayerOption);
 
-        JRadioButton gt_Mission_rad = new JRadioButton();
-        gt_Mission_rad.setText("Mission");
-        gt_Mission_rad.setBounds(10,50,100,20);
-        gt_Mission_rad.setEnabled(false);
-        gt_Mission_rad.addActionListener(this);
-        gt_RadioButtons_grp.add(gt_Mission_rad);
-        gt_pnl.add(gt_Mission_rad);
+        MissionOption.setText("Mission");
+        MissionOption.setBounds(10,50,100,20);
+        MissionOption.setEnabled(false);
+        MissionOption.addActionListener(this);
+        gameTypeOption.add(MissionOption);
+        gameTypePanel.add(MissionOption);
 
-        JRadioButton gt_Conquest_rad = new JRadioButton();
-        gt_Conquest_rad.setText("Conquest");
-        gt_Conquest_rad.setBounds(10,70,100,20);
-        gt_Conquest_rad.addActionListener(this);
-        gt_Conquest_rad.setSelected(true);	//Make this the default selection
-        gt_RadioButtons_grp.add(gt_Conquest_rad);
-        gt_pnl.add(gt_Conquest_rad);
+        ConquestOption.setText("Conquest");
+        ConquestOption.setBounds(10,70,100,20);
+        ConquestOption.addActionListener(this);
+        ConquestOption.setSelected(true);	//Make this the default selection
+        gameTypeOption.add(ConquestOption);
+        gameTypePanel.add(ConquestOption);
         
-//Declare Number of Players GUI components
-    	JPanel np_pnl = new JPanel();
-    	np_pnl.setBounds(200,0,200,100);
-    	np_pnl.setBackground(Color.LIGHT_GRAY);
-    	np_pnl.setLayout(null);
-    	this.add(np_pnl);
+        // SETUP: Number Of Players Panel
+    	numberOfPlayersPanel.setBounds(200,0,200,100);
+    	numberOfPlayersPanel.setLayout(null);
+    	this.add(numberOfPlayersPanel);
     	
-        JLabel np_Prompt_lbl = new JLabel();
-        np_Prompt_lbl.setText("Number Of Players In Game:");
-        np_Prompt_lbl.setBounds(0,10,200,20);
-        np_pnl.add(np_Prompt_lbl);
+        numberOfPlayersLabel.setText("Number Of Players In Game:");
+        numberOfPlayersLabel.setBounds(0,10,200,20);
+        numberOfPlayersPanel.add(numberOfPlayersLabel);
         
-        ButtonGroup np_RadioButtons_grp = new ButtonGroup();
+        TwoPlayerGame.setText("2 Players");
+        TwoPlayerGame.setBounds(0,30,100,20);
+        TwoPlayerGame.setEnabled(false);
+        TwoPlayerGame.addActionListener(this);
+        numberOfPlayersOption.add(TwoPlayerGame);
+        numberOfPlayersPanel.add(TwoPlayerGame);
         
-        np_2Players_rad.setText("2 Players");
-        np_2Players_rad.setBounds(0,30,100,20);
-        np_2Players_rad.setEnabled(false);
-        np_2Players_rad.addActionListener(this);
-        np_RadioButtons_grp.add(np_2Players_rad);
-        np_pnl.add(np_2Players_rad);
-        
-        np_3Players_rad.setText("3 Players");
-        np_3Players_rad.setBounds(0,50,100,20);
-        np_3Players_rad.addActionListener(this);
-        np_RadioButtons_grp.add(np_3Players_rad);
-        np_pnl.add(np_3Players_rad);
+        ThreePlayerGame.setText("3 Players");
+        ThreePlayerGame.setBounds(0,50,100,20);
+        ThreePlayerGame.addActionListener(this);
+        numberOfPlayersOption.add(ThreePlayerGame);
+        numberOfPlayersPanel.add(ThreePlayerGame);
 
-        np_4Players_rad.setText("4 Players");
-        np_4Players_rad.setBounds(0,70,100,20);
-        np_4Players_rad.addActionListener(this);
-        np_RadioButtons_grp.add(np_4Players_rad);
-        np_pnl.add(np_4Players_rad);
+        FourPlayerGame.setText("4 Players");
+        FourPlayerGame.setBounds(0,70,100,20);
+        FourPlayerGame.addActionListener(this);
+        numberOfPlayersOption.add(FourPlayerGame);
+        numberOfPlayersPanel.add(FourPlayerGame);
 
-        np_5Players_rad.setText("5 Players");
-        np_5Players_rad.setBounds(100,30,100,20);
-        np_5Players_rad.addActionListener(this);
-        np_RadioButtons_grp.add(np_5Players_rad);
-        np_pnl.add(np_5Players_rad);
+        FivePlayerGame.setText("5 Players");
+        FivePlayerGame.setBounds(100,30,100,20);
+        FivePlayerGame.addActionListener(this);
+        numberOfPlayersOption.add(FivePlayerGame);
+        numberOfPlayersPanel.add(FivePlayerGame);
 
-        np_6Players_rad.setText("6 Players");
-        np_6Players_rad.setBounds(100,50,100,20);
-        np_6Players_rad.addActionListener(this);
-        np_6Players_rad.setSelected(true);	//Make this the default selection
-        np_RadioButtons_grp.add(np_6Players_rad);
-        np_pnl.add(np_6Players_rad);
+        SixPlayerGame.setText("6 Players");
+        SixPlayerGame.setBounds(100,50,100,20);
+        SixPlayerGame.addActionListener(this);
+        SixPlayerGame.setSelected(true);	//Make this the default selection
+        numberOfPlayersOption.add(SixPlayerGame);
+        numberOfPlayersPanel.add(SixPlayerGame);
 
-//////////////////////////////////////////////////////////////////////////////////////////
-//Declare Player 1's GUI components
-//////////////////////////////////////////////////////////////////////////////////////////
-    	p1_pnl.setBounds(0,120,210,100);
-    	p1_pnl.setBackground(Color.LIGHT_GRAY);
-    	p1_pnl.setLayout(null);
-    	this.add(p1_pnl);
+        // Declare Player 1's GUI Component
+    	player1Panel.setBounds(0,120,210,100);
+    	player1Panel.setLayout(null);
+    	this.add(player1Panel);
     	
     	//PLAYER 1 HEADING
-        JLabel p1_Prompt_lbl = new JLabel();
-        p1_Prompt_lbl.setText("Player 1");
-        p1_Prompt_lbl.setBounds(20,0,200,20);
-        p1_pnl.add(p1_Prompt_lbl);
+        JLabel player1Label = new JLabel();
+        player1Label.setText("Player 1");
+        player1Label.setBounds(20,0,200,20);
+        player1Panel.add(player1Label);
                 
         JLabel p1_NamePrompt_lbl = new JLabel();
         p1_NamePrompt_lbl.setText("Name: ");
         p1_NamePrompt_lbl.setBounds(40,20,60,20);
-        p1_pnl.add(p1_NamePrompt_lbl);
+        player1Panel.add(p1_NamePrompt_lbl);
         
         JLabel p1_TypePrompt_lbl = new JLabel();
         p1_TypePrompt_lbl.setText("Type: ");
         p1_TypePrompt_lbl.setBounds(40,40,60,20);
-        p1_pnl.add(p1_TypePrompt_lbl);
+        player1Panel.add(p1_TypePrompt_lbl);
 
         JLabel p1_ColorPrompt_lbl = new JLabel();
         p1_ColorPrompt_lbl.setText("Color: ");
         p1_ColorPrompt_lbl.setBounds(40,60,60,20);
-        p1_pnl.add(p1_ColorPrompt_lbl);
+        player1Panel.add(p1_ColorPrompt_lbl);
         
     	//PLAYER 1 Name
-        p1_Name_txt.setText("Player 1");
-        p1_Name_txt.setBounds(100,20,100,20);
-        p1_pnl.add(p1_Name_txt);
+        player1Name.setText("Player 1");
+        player1Name.setBounds(100,20,100,20);
+        player1Panel.add(player1Name);
         
     	//PLAYER 1 Human/Computer
-        p1_Type_btn.setText("Human");
-        p1_Type_btn.setBounds(100,40,100,20);
-        p1_Type_btn.addActionListener(this);
-        p1_pnl.add(p1_Type_btn);
+        player1Toggle.setText("Human");
+        player1Toggle.setBounds(100,40,100,20);
+        player1Toggle.addActionListener(this);
+        player1Panel.add(player1Toggle);
         
     	//PLAYER 1 Color
-        p1_Color_cmb.setBounds(100,60,100,20);
-        p1_Color_cmb.setSelectedItem(p1_Color_cmb.getItemAt(p1_Color_int));
-        p1_Color_cmb.addActionListener(this);
-        p1_pnl.add(p1_Color_cmb);
+        player1ComboBox.setBounds(100,60,100,20);
+        player1ComboBox.setSelectedItem(player1ComboBox.getItemAt(player1Color));
+        player1ComboBox.addActionListener(this);
+        player1Panel.add(player1ComboBox);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //Declare Player 2's GUI components
 //////////////////////////////////////////////////////////////////////////////////////////
-    	p2_pnl.setBounds(0,220,210,100);
-    	p2_pnl.setBackground(Color.LIGHT_GRAY);
-    	p2_pnl.setLayout(null);
-    	this.add(p2_pnl);
+    	player2Panel.setBounds(0,220,210,100);
+    	player2Panel.setLayout(null);
+    	this.add(player2Panel);
     	
         JLabel p2_Prompt_lbl = new JLabel();
         p2_Prompt_lbl.setText("Player 2");
         p2_Prompt_lbl.setBounds(20,0,200,20);
-        p2_pnl.add(p2_Prompt_lbl);
+        player2Panel.add(p2_Prompt_lbl);
                 
         JLabel p2_NamePrompt_lbl = new JLabel();
         p2_NamePrompt_lbl.setText("Name: ");
         p2_NamePrompt_lbl.setBounds(40,20,60,20);
-        p2_pnl.add(p2_NamePrompt_lbl);
+        player2Panel.add(p2_NamePrompt_lbl);
         
         JLabel p2_TypePrompt_lbl = new JLabel();
         p2_TypePrompt_lbl.setText("Type: ");
         p2_TypePrompt_lbl.setBounds(40,40,60,20);
-        p2_pnl.add(p2_TypePrompt_lbl);
+        player2Panel.add(p2_TypePrompt_lbl);
 
         JLabel p2_ColorPrompt_lbl = new JLabel();
         p2_ColorPrompt_lbl.setText("Color: ");
         p2_ColorPrompt_lbl.setBounds(40,60,60,20);
-        p2_pnl.add(p2_ColorPrompt_lbl);
+        player2Panel.add(p2_ColorPrompt_lbl);
         
     	//PLAYER 2 Name
-        p2_Name_txt.setText("Player 2");
-        p2_Name_txt.setBounds(100,20,100,20);
-        p2_pnl.add(p2_Name_txt);
+        player2Name.setText("Player 2");
+        player2Name.setBounds(100,20,100,20);
+        player2Panel.add(player2Name);
         
     	//PLAYER 2 Human/Computer
-        p2_Type_btn.setText("Human");
-        p2_Type_btn.setBounds(100,40,100,20);
-        p2_Type_btn.addActionListener(this);
-        p2_pnl.add(p2_Type_btn);
+        player2Toggle.setText("Human");
+        player2Toggle.setBounds(100,40,100,20);
+        player2Toggle.addActionListener(this);
+        player2Panel.add(player2Toggle);
         
     	//PLAYER 2 Color
-        p2_Color_cmb.setBounds(100,60,100,20);
-        p2_Color_cmb.setSelectedItem(p2_Color_cmb.getItemAt(p2_Color_int));
-        p2_Color_cmb.addActionListener(this);
-        p2_pnl.add(p2_Color_cmb);
+        player2ComboBox.setBounds(100,60,100,20);
+        player2ComboBox.setSelectedItem(player2ComboBox.getItemAt(player2Color));
+        player2ComboBox.addActionListener(this);
+        player2Panel.add(player2ComboBox);
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //Declare Player 3's GUI components
 //////////////////////////////////////////////////////////////////////////////////////////
-    	p3_pnl.setBounds(0,320,210,100);
-    	p3_pnl.setBackground(Color.LIGHT_GRAY);
-    	p3_pnl.setLayout(null);
-    	this.add(p3_pnl);
+    	player3Panel.setBounds(0,320,210,100);
+    	player3Panel.setLayout(null);
+    	this.add(player3Panel);
     	
         JLabel p3_Prompt_lbl = new JLabel();
         p3_Prompt_lbl.setText("Player 3");
         p3_Prompt_lbl.setBounds(20,0,200,20);
-        p3_pnl.add(p3_Prompt_lbl);
+        player3Panel.add(p3_Prompt_lbl);
                 
         JLabel p3_NamePrompt_lbl = new JLabel();
         p3_NamePrompt_lbl.setText("Name: ");
         p3_NamePrompt_lbl.setBounds(40,20,60,20);
-        p3_pnl.add(p3_NamePrompt_lbl);
+        player3Panel.add(p3_NamePrompt_lbl);
         
         JLabel p3_TypePrompt_lbl = new JLabel();
         p3_TypePrompt_lbl.setText("Type: ");
         p3_TypePrompt_lbl.setBounds(40,40,60,20);
-        p3_pnl.add(p3_TypePrompt_lbl);
+        player3Panel.add(p3_TypePrompt_lbl);
 
         JLabel p3_ColorPrompt_lbl = new JLabel();
         p3_ColorPrompt_lbl.setText("Color: ");
         p3_ColorPrompt_lbl.setBounds(40,60,60,20);
-        p3_pnl.add(p3_ColorPrompt_lbl);
+        player3Panel.add(p3_ColorPrompt_lbl);
         
         // Player 3 Name
-        p3_Name_txt.setText("Player 3");
-        p3_Name_txt.setBounds(100,20,100,20);
-        p3_pnl.add(p3_Name_txt);
+        player3Name.setText("Player 3");
+        player3Name.setBounds(100,20,100,20);
+        player3Panel.add(player3Name);
         
         // Player 3 Human/Computer
-        p3_Type_btn.setText("Human");
-        p3_Type_btn.setBounds(100,40,100,20);
-        p3_Type_btn.addActionListener(this);
-        p3_pnl.add(p3_Type_btn);
+        player3Toggle.setText("Human");
+        player3Toggle.setBounds(100,40,100,20);
+        player3Toggle.addActionListener(this);
+        player3Panel.add(player3Toggle);
         
         // Player 3 Color
-        p3_Color_cmb.setBounds(100,60,100,20);
-        p3_Color_cmb.setSelectedItem(p3_Color_cmb.getItemAt(p3_Color_int));
-        p3_Color_cmb.addActionListener(this);
-        p3_pnl.add(p3_Color_cmb);
+        player3ComboBox.setBounds(100,60,100,20);
+        player3ComboBox.setSelectedItem(player3ComboBox.getItemAt(player3Color));
+        player3ComboBox.addActionListener(this);
+        player3Panel.add(player3ComboBox);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //Declare Player 4's GUI components
 //////////////////////////////////////////////////////////////////////////////////////////
-    	p4_pnl.setBounds(210,120,210,100);
-    	p4_pnl.setBackground(Color.LIGHT_GRAY);
-    	p4_pnl.setLayout(null);
-    	this.add(p4_pnl);
+    	player4Panel.setBounds(210,120,210,100);
+    	player4Panel.setLayout(null);
+    	this.add(player4Panel);
     	
         JLabel p4_Prompt_lbl = new JLabel();
         p4_Prompt_lbl.setText("Player 4");
         p4_Prompt_lbl.setBounds(10,0,200,20);
-        p4_pnl.add(p4_Prompt_lbl);
+        player4Panel.add(p4_Prompt_lbl);
                 
         JLabel p4_NamePrompt_lbl = new JLabel();
         p4_NamePrompt_lbl.setText("Name: ");
         p4_NamePrompt_lbl.setBounds(30,20,60,20);
-        p4_pnl.add(p4_NamePrompt_lbl);
+        player4Panel.add(p4_NamePrompt_lbl);
         
         JLabel p4_TypePrompt_lbl = new JLabel();
         p4_TypePrompt_lbl.setText("Type: ");
         p4_TypePrompt_lbl.setBounds(30,40,60,20);
-        p4_pnl.add(p4_TypePrompt_lbl);
+        player4Panel.add(p4_TypePrompt_lbl);
 
         JLabel p4_ColorPrompt_lbl = new JLabel();
         p4_ColorPrompt_lbl.setText("Color: ");
         p4_ColorPrompt_lbl.setBounds(30,60,60,20);
-        p4_pnl.add(p4_ColorPrompt_lbl);
+        player4Panel.add(p4_ColorPrompt_lbl);
         
         // Player 4 Name
-        p4_Name_txt.setText("Player 4");
-        p4_Name_txt.setBounds(90,20,100,20);
-        p4_pnl.add(p4_Name_txt);
+        player4Name.setText("Player 4");
+        player4Name.setBounds(90,20,100,20);
+        player4Panel.add(player4Name);
         
         // Player 4 Human/Computer
-        p4_Type_btn.setText("Human");
-        p4_Type_btn.setBounds(90,40,100,20);
-        p4_Type_btn.addActionListener(this);
-        p4_pnl.add(p4_Type_btn);
+        player4Toggle.setText("Human");
+        player4Toggle.setBounds(90,40,100,20);
+        player4Toggle.addActionListener(this);
+        player4Panel.add(player4Toggle);
         
         // Player 4 Color
-        p4_Color_cmb.setBounds(90,60,100,20);
-        p4_Color_cmb.setSelectedItem(p4_Color_cmb.getItemAt(p4_Color_int));
-        p4_Color_cmb.addActionListener(this);
-        p4_pnl.add(p4_Color_cmb);
+        player4ComboBox.setBounds(90,60,100,20);
+        player4ComboBox.setSelectedItem(player4ComboBox.getItemAt(player4Color));
+        player4ComboBox.addActionListener(this);
+        player4Panel.add(player4ComboBox);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //Declare Player 5's GUI components
 //////////////////////////////////////////////////////////////////////////////////////////
-    	p5_pnl.setBounds(210,220,210,100);
-    	p5_pnl.setBackground(Color.LIGHT_GRAY);
-    	p5_pnl.setLayout(null);
-    	this.add(p5_pnl);
+    	player5Panel.setBounds(210,220,210,100);
+    	player5Panel.setLayout(null);
+    	this.add(player5Panel);
     	
     	JLabel p5_Prompt_lbl = new JLabel();
         p5_Prompt_lbl.setText("Player 5");
         p5_Prompt_lbl.setBounds(10,0,200,20);
-        p5_pnl.add(p5_Prompt_lbl);
+        player5Panel.add(p5_Prompt_lbl);
                 
         JLabel p5_NamePrompt_lbl = new JLabel();
         p5_NamePrompt_lbl.setText("Name: ");
         p5_NamePrompt_lbl.setBounds(30,20,60,20);
-        p5_pnl.add(p5_NamePrompt_lbl);
+        player5Panel.add(p5_NamePrompt_lbl);
         
         JLabel p5_TypePrompt_lbl = new JLabel();
         p5_TypePrompt_lbl.setText("Type: ");
         p5_TypePrompt_lbl.setBounds(30,40,60,20);
-        p5_pnl.add(p5_TypePrompt_lbl);
+        player5Panel.add(p5_TypePrompt_lbl);
 
         JLabel p5_ColorPrompt_lbl = new JLabel();
         p5_ColorPrompt_lbl.setText("Color: ");
         p5_ColorPrompt_lbl.setBounds(30,60,60,20);
-        p5_pnl.add(p5_ColorPrompt_lbl);
+        player5Panel.add(p5_ColorPrompt_lbl);
         
         // Player 5 Name
-        p5_Name_txt.setText("Player 5");
-        p5_Name_txt.setBounds(90,20,100,20);
-        p5_pnl.add(p5_Name_txt);
+        player5Name.setText("Player 5");
+        player5Name.setBounds(90,20,100,20);
+        player5Panel.add(player5Name);
         
         // Player 5 Human/Computer
-        p5_Type_btn.setText("Human");
-        p5_Type_btn.setBounds(90,40,100,20);
-        p5_Type_btn.addActionListener(this);
-        p5_pnl.add(p5_Type_btn);
+        player5Toggle.setText("Human");
+        player5Toggle.setBounds(90,40,100,20);
+        player5Toggle.addActionListener(this);
+        player5Panel.add(player5Toggle);
         
         // Player 5 Color
-        p5_Color_cmb.setBounds(90,60,100,20);
-        p5_Color_cmb.setSelectedItem(p5_Color_cmb.getItemAt(p5_Color_int));
-        p5_Color_cmb.addActionListener(this);
-        p5_pnl.add(p5_Color_cmb);
+        player5ComboBox.setBounds(90,60,100,20);
+        player5ComboBox.setSelectedItem(player5ComboBox.getItemAt(player5Color));
+        player5ComboBox.addActionListener(this);
+        player5Panel.add(player5ComboBox);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //Declare Player 6's GUI components
  //////////////////////////////////////////////////////////////////////////////////////////
-    	p6_pnl.setBounds(210,320,210,100);
-    	p6_pnl.setBackground(Color.LIGHT_GRAY);
-    	p6_pnl.setLayout(null);
-    	this.add(p6_pnl);
+    	player6Panel.setBounds(210,320,210,100);
+    	player6Panel.setLayout(null);
+    	this.add(player6Panel);
     	
         JLabel p6_Prompt_lbl = new JLabel();
         p6_Prompt_lbl.setText("Player 6");
         p6_Prompt_lbl.setBounds(10,0,200,20);
-        p6_pnl.add(p6_Prompt_lbl);
+        player6Panel.add(p6_Prompt_lbl);
                 
         JLabel p6_NamePrompt_lbl = new JLabel();
         p6_NamePrompt_lbl.setText("Name: ");
         p6_NamePrompt_lbl.setBounds(30,20,60,20);
-        p6_pnl.add(p6_NamePrompt_lbl);
+        player6Panel.add(p6_NamePrompt_lbl);
         
         JLabel p6_TypePrompt_lbl = new JLabel();
         p6_TypePrompt_lbl.setText("Type: ");
         p6_TypePrompt_lbl.setBounds(30,40,60,20);
-        p6_pnl.add(p6_TypePrompt_lbl);
+        player6Panel.add(p6_TypePrompt_lbl);
 
         JLabel p6_ColorPrompt_lbl = new JLabel();
         p6_ColorPrompt_lbl.setText("Color: ");
         p6_ColorPrompt_lbl.setBounds(30,60,60,20);
-        p6_pnl.add(p6_ColorPrompt_lbl);
+        player6Panel.add(p6_ColorPrompt_lbl);
         
         // Player 6 Name
-        p6_Name_txt.setText("Player 6");
-        p6_Name_txt.setBounds(90,20,100,20);
-        p6_pnl.add(p6_Name_txt);
+        player6Name.setText("Player 6");
+        player6Name.setBounds(90,20,100,20);
+        player6Panel.add(player6Name);
         
         // Player 6 Human/Computer
-        p6_Type_btn.setText("Human");
-        p6_Type_btn.setBounds(90,40,100,20);
-        p6_Type_btn.addActionListener(this);
-        p6_pnl.add(p6_Type_btn);
+        player6Toggle.setText("Human");
+        player6Toggle.setBounds(90,40,100,20);
+        player6Toggle.addActionListener(this);
+        player6Panel.add(player6Toggle);
         
         // Player 6 Color
-        p6_Color_cmb.setBounds(90,60,100,20);
-        p6_Color_cmb.setSelectedItem(p6_Color_cmb.getItemAt(p6_Color_int));
-        p6_Color_cmb.addActionListener(this);
-        p6_pnl.add(p6_Color_cmb);
+        player6ComboBox.setBounds(90,60,100,20);
+        player6ComboBox.setSelectedItem(player6ComboBox.getItemAt(player6Color));
+        player6ComboBox.addActionListener(this);
+        player6Panel.add(player6ComboBox);
 
 //Declare Confirmation GUI components
     	JPanel cf_pnl = new JPanel();
     	cf_pnl.setBounds(0,400,400,100);
-    	cf_pnl.setBackground(Color.LIGHT_GRAY);
     	cf_pnl.setLayout(null);
     	this.add(cf_pnl);
     	
-    	cf_Confirm_btn.setText("Start Game");
-    	cf_Confirm_btn.setBounds(50,20,300,50);
-    	cf_Confirm_btn.addActionListener(this);
-    	cf_pnl.add(cf_Confirm_btn);
+    	startGameButton.setText("Start Game");
+    	startGameButton.setBounds(60,20,300,50);
+    	startGameButton.addActionListener(this);
+    	cf_pnl.add(startGameButton);
 	}
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -473,29 +453,29 @@ public class Game_Setup extends JFrame implements ActionListener
 		//HANDLE COMBOBOX
 		if(e.getSource()instanceof JComboBox)
 		{
-			if(e.getSource() == p1_Color_cmb)
+			if(e.getSource() == player1ComboBox)
 			{
-				p1_Color_int = p1_Color_cmb.getSelectedIndex();
+				player1Color = player1ComboBox.getSelectedIndex();
 			}
-			else if(e.getSource() == p2_Color_cmb)
+			else if(e.getSource() == player2ComboBox)
 			{
-				p2_Color_int = p2_Color_cmb.getSelectedIndex();
+				player2Color = player2ComboBox.getSelectedIndex();
 			}
-			else if(e.getSource() == p3_Color_cmb)
+			else if(e.getSource() == player3ComboBox)
 			{
-				p3_Color_int = p3_Color_cmb.getSelectedIndex();
+				player3Color = player3ComboBox.getSelectedIndex();
 			}
-			else if(e.getSource() == p4_Color_cmb)
+			else if(e.getSource() == player4ComboBox)
 			{
-				p4_Color_int = p4_Color_cmb.getSelectedIndex();
+				player4Color = player4ComboBox.getSelectedIndex();
 			}
-			else if(e.getSource() == p5_Color_cmb)
+			else if(e.getSource() == player5ComboBox)
 			{
-				p5_Color_int = p5_Color_cmb.getSelectedIndex();
+				player5Color = player5ComboBox.getSelectedIndex();
 			}
-			else if(e.getSource() == p6_Color_cmb)
+			else if(e.getSource() == player6ComboBox)
 			{
-				p6_Color_int = p6_Color_cmb.getSelectedIndex();
+				player6Color = player6ComboBox.getSelectedIndex();
 			}
 		}
 		//HANDLE BUTTONS
@@ -504,111 +484,111 @@ public class Game_Setup extends JFrame implements ActionListener
 			JButton tmp_btn = null;
 			tmp_btn = (JButton)e.getSource();
 			
-			if(tmp_btn == cf_Confirm_btn)
+			if(tmp_btn == startGameButton)
 			{
-				//Ensure no two colors are the same
-				if(	p1_Color_int != p2_Color_int
-						&& (p1_Color_int != p3_Color_int || numberOfPlayers_int < 3)
-						&& (p2_Color_int != p3_Color_int || numberOfPlayers_int < 3)
-						&& (p1_Color_int != p4_Color_int || numberOfPlayers_int < 4)
-						&& (p2_Color_int != p4_Color_int || numberOfPlayers_int < 4)
-						&& (p3_Color_int != p4_Color_int || numberOfPlayers_int < 4)
-						&& (p1_Color_int != p5_Color_int || numberOfPlayers_int < 5)
-						&& (p2_Color_int != p5_Color_int || numberOfPlayers_int < 5)
-						&& (p3_Color_int != p5_Color_int || numberOfPlayers_int < 5)
-						&& (p4_Color_int != p5_Color_int || numberOfPlayers_int < 5)
-						&& (p1_Color_int != p6_Color_int || numberOfPlayers_int < 6)
-						&& (p2_Color_int != p6_Color_int || numberOfPlayers_int < 6)
-						&& (p3_Color_int != p6_Color_int || numberOfPlayers_int < 6)
-						&& (p4_Color_int != p6_Color_int || numberOfPlayers_int < 6)
-						&& (p5_Color_int != p6_Color_int || numberOfPlayers_int < 6))
+				//Ensure no two color are the same
+				if(	player1Color != player2Color
+						&& (player1Color != player3Color || numberOfPlayers < 3)
+						&& (player2Color != player3Color || numberOfPlayers < 3)
+						&& (player1Color != player4Color || numberOfPlayers < 4)
+						&& (player2Color != player4Color || numberOfPlayers < 4)
+						&& (player3Color != player4Color || numberOfPlayers < 4)
+						&& (player1Color != player5Color || numberOfPlayers < 5)
+						&& (player2Color != player5Color || numberOfPlayers < 5)
+						&& (player3Color != player5Color || numberOfPlayers < 5)
+						&& (player4Color != player5Color || numberOfPlayers < 5)
+						&& (player1Color != player6Color || numberOfPlayers < 6)
+						&& (player2Color != player6Color || numberOfPlayers < 6)
+						&& (player3Color != player6Color || numberOfPlayers < 6)
+						&& (player4Color != player6Color || numberOfPlayers < 6)
+						&& (player5Color != player6Color || numberOfPlayers < 6))
 				{
 					startGame();
 				}
 				else
 				{
 					JOptionPane.showMessageDialog(this,
-							"Select colors for all player","INVALID OPTION:", 0);
+							"Select color for all player","INVALID OPTION:", 0);
 				}
 			}
-			else if(tmp_btn == p1_Type_btn)
+			else if(tmp_btn == player1Toggle)
 			{
-				if(p1_Type_btn.getText().equalsIgnoreCase("Human"))
-					p1_Type_btn.setText("Computer");
+				if(player1Toggle.getText().equalsIgnoreCase("Human"))
+					player1Toggle.setText("Computer");
 				else
-					p1_Type_btn.setText("Human");					
+					player1Toggle.setText("Human");					
 			}
-			else if(tmp_btn == p2_Type_btn)
+			else if(tmp_btn == player2Toggle)
 			{
-				if(p2_Type_btn.getText().equalsIgnoreCase("Human"))
-					p2_Type_btn.setText("Computer");
+				if(player2Toggle.getText().equalsIgnoreCase("Human"))
+					player2Toggle.setText("Computer");
 				else
-					p2_Type_btn.setText("Human");					
+					player2Toggle.setText("Human");					
 			}
-			else if(tmp_btn == p3_Type_btn)
+			else if(tmp_btn == player3Toggle)
 			{
-				if(p3_Type_btn.getText().equalsIgnoreCase("Human"))
-					p3_Type_btn.setText("Computer");
+				if(player3Toggle.getText().equalsIgnoreCase("Human"))
+					player3Toggle.setText("Computer");
 				else
-					p3_Type_btn.setText("Human");					
+					player3Toggle.setText("Human");					
 			}
-			else if(tmp_btn == p4_Type_btn)
+			else if(tmp_btn == player4Toggle)
 			{
-				if(p4_Type_btn.getText().equalsIgnoreCase("Human"))
-					p4_Type_btn.setText("Computer");
+				if(player4Toggle.getText().equalsIgnoreCase("Human"))
+					player4Toggle.setText("Computer");
 				else
-					p4_Type_btn.setText("Human");					
+					player4Toggle.setText("Human");					
 			}
-			else if(tmp_btn == p5_Type_btn)
+			else if(tmp_btn == player5Toggle)
 			{
-				if(p5_Type_btn.getText().equalsIgnoreCase("Human"))
-					p5_Type_btn.setText("Computer");
+				if(player5Toggle.getText().equalsIgnoreCase("Human"))
+					player5Toggle.setText("Computer");
 				else
-					p5_Type_btn.setText("Human");					
+					player5Toggle.setText("Human");					
 			}
-			else if(tmp_btn == p6_Type_btn)
+			else if(tmp_btn == player6Toggle)
 			{
-				if(p6_Type_btn.getText().equalsIgnoreCase("Human"))
-					p6_Type_btn.setText("Computer");
+				if(player6Toggle.getText().equalsIgnoreCase("Human"))
+					player6Toggle.setText("Computer");
 				else
-					p6_Type_btn.setText("Human");					
+					player6Toggle.setText("Human");					
 			}
 		}
 		//HANDLE RADIO BUTTONS
 		else if(e.getSource() instanceof JRadioButton)
 		{
 			JRadioButton tmp_rad = (JRadioButton)e.getSource();			
-			if(tmp_rad == np_3Players_rad)
+			if(tmp_rad == ThreePlayerGame)
 			{
-				numberOfPlayers_int = 3;
-				p3_pnl.setVisible(true);
-				p4_pnl.setVisible(false);
-				p5_pnl.setVisible(false);
-				p6_pnl.setVisible(false);
+				numberOfPlayers = 3;
+				player3Panel.setVisible(true);
+				player4Panel.setVisible(false);
+				player5Panel.setVisible(false);
+				player6Panel.setVisible(false);
 			}
-			else if(tmp_rad == np_4Players_rad)
+			else if(tmp_rad == FourPlayerGame)
 			{
-				numberOfPlayers_int = 4;
-				p3_pnl.setVisible(true);
-				p4_pnl.setVisible(true);
-				p5_pnl.setVisible(false);
-				p6_pnl.setVisible(false);
+				numberOfPlayers = 4;
+				player3Panel.setVisible(true);
+				player4Panel.setVisible(true);
+				player5Panel.setVisible(false);
+				player6Panel.setVisible(false);
 			}
-			else if(tmp_rad == np_5Players_rad)
+			else if(tmp_rad == FivePlayerGame)
 			{
-				numberOfPlayers_int = 5;
-				p3_pnl.setVisible(true);
-				p4_pnl.setVisible(true);
-				p5_pnl.setVisible(true);
-				p6_pnl.setVisible(false);
+				numberOfPlayers = 5;
+				player3Panel.setVisible(true);
+				player4Panel.setVisible(true);
+				player5Panel.setVisible(true);
+				player6Panel.setVisible(false);
 			}
-			else if(tmp_rad == np_6Players_rad)
+			else if(tmp_rad == SixPlayerGame)
 			{
-				numberOfPlayers_int = 6;
-				p3_pnl.setVisible(true);
-				p4_pnl.setVisible(true);
-				p5_pnl.setVisible(true);
-				p6_pnl.setVisible(true);
+				numberOfPlayers = 6;
+				player3Panel.setVisible(true);
+				player4Panel.setVisible(true);
+				player5Panel.setVisible(true);
+				player6Panel.setVisible(true);
 			}
 		}
 	}	
@@ -617,33 +597,33 @@ public class Game_Setup extends JFrame implements ActionListener
 		//Initialize Players
 		Player[] players = new Player[6];
 		players[0] = new Player(0,
-				p1_Name_txt.getText(),
-				p1_Type_btn.getText().equalsIgnoreCase("Human"),
-				p_Colors_[p1_Color_cmb.getSelectedIndex()]);
+				player1Name.getText(),
+				player1Toggle.getText().equalsIgnoreCase("Human"),
+				color[player1ComboBox.getSelectedIndex()]);
 		players[1] = new Player(1,
-				p2_Name_txt.getText(),
-				p2_Type_btn.getText().equalsIgnoreCase("Human"),
-				p_Colors_[p2_Color_cmb.getSelectedIndex()]);
+				player2Name.getText(),
+				player2Toggle.getText().equalsIgnoreCase("Human"),
+				color[player2ComboBox.getSelectedIndex()]);
 		players[2] = new Player(2,
-				p3_Name_txt.getText(),
-				p3_Type_btn.getText().equalsIgnoreCase("Human"),
-				p_Colors_[p3_Color_cmb.getSelectedIndex()]);
+				player3Name.getText(),
+				player3Toggle.getText().equalsIgnoreCase("Human"),
+				color[player3ComboBox.getSelectedIndex()]);
 		players[3] = new Player(3,
-				p4_Name_txt.getText(),
-				p4_Type_btn.getText().equalsIgnoreCase("Human"),
-				p_Colors_[p4_Color_cmb.getSelectedIndex()]);
+				player4Name.getText(),
+				player4Toggle.getText().equalsIgnoreCase("Human"),
+				color[player4ComboBox.getSelectedIndex()]);
 		players[4] = new Player(4,
-				p5_Name_txt.getText(),
-				p5_Type_btn.getText().equalsIgnoreCase("Human"),
-				p_Colors_[p5_Color_cmb.getSelectedIndex()]);
+				player5Name.getText(),
+				player5Toggle.getText().equalsIgnoreCase("Human"),
+				color[player5ComboBox.getSelectedIndex()]);
 		players[5] = new Player(5,
-				p6_Name_txt.getText(),
-				p6_Type_btn.getText().equalsIgnoreCase("Human"),
-				p_Colors_[p6_Color_cmb.getSelectedIndex()]);
+				player6Name.getText(),
+				player6Toggle.getText().equalsIgnoreCase("Human"),
+				color[player6ComboBox.getSelectedIndex()]);
 
 		Random rand = new Random();//Select player to go first
-		Game_Core game = new Game_Core
-			(players,numberOfPlayers_int,rand.nextInt(numberOfPlayers_int));
+		GameCore game = new GameCore
+			(players,numberOfPlayers,rand.nextInt(numberOfPlayers));
 
 		game.setSize(1007,628);
 		game.setVisible(true);

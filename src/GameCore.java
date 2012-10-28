@@ -1,12 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////
-//								RISK PROJECT									//
-//								  CECS 343										//
-//------------------------------------------------------------------------------//
-//								TEAM MEMBERS:									//
-//								Joseph Buss										//
-//								John Gallego									//
-//								Jonathan Stoner									//
-//////////////////////////////////////////////////////////////////////////////////
+// Risk Project - CECS 343
+// Joseph Buss, John Gallego, Jonathan Stoner
 
 import java.awt.Color;
 import java.awt.event.*;
@@ -16,12 +9,11 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 
 @SuppressWarnings("serial")
-public class Game_Core extends JFrame implements ActionListener
+public class GameCore extends JFrame implements ActionListener
 {
 //////////////////////////////////////////////////////////////////////////////////
 //	VARIABLE DECLARATION
@@ -34,13 +26,10 @@ public class Game_Core extends JFrame implements ActionListener
 	public static Territory t2 = new Territory("t2");
 	
 	//Needed for JOptionPane to be called from the mouse listener
-	private Game_Core frame;
+	private GameCore frame;
 
 	//Needed to handle mouse input
 	private MouseListener listener_mouse;
-
-	//used for inputing images
-	private JFileChooser tempFC = new JFileChooser();
 	
 	//Store Player values
 	private int numberOfPlayers;
@@ -94,13 +83,13 @@ public class Game_Core extends JFrame implements ActionListener
 //////////////////////////////////////////////////////////////////////////////////
 //	CONSTRUCTOR
 //////////////////////////////////////////////////////////////////////////////////
-	public Game_Core(Player[] players, int numberOfPlayers, int firstPlayer)
+	public GameCore(Player[] players, int numberOfPlayers, int firstPlayer)
 	{
 		frame = this;
 		this.setTitle("RISK: 2003 Edition");
-		this.getContentPane().setLayout(null);
-		this.setSize(1007,628);
+		this.getContentPane().setLayout(null);;
 		this.setVisible(true);
+		this.setBounds(300,200, 1007,628);
 		
 		turnIndicator_int = firstPlayer;
 		this.numberOfPlayers = numberOfPlayers;
@@ -109,11 +98,6 @@ public class Game_Core extends JFrame implements ActionListener
 		{
 			this.players[ctr] = players[ctr];
 		}
-		
-		//initialize image file path
-		tempFC.setCurrentDirectory(new File("C:"));
-        String tempFP = tempFC.getCurrentDirectory().getAbsolutePath();
-        tempFC.setCurrentDirectory(new File(tempFP));
 			    
 	    initializeZoneLabels();	//Top layer
 	    initializePanels();		//Bottom layer
@@ -708,7 +692,7 @@ public class Game_Core extends JFrame implements ActionListener
     	BufferedImage img = null;
     	try 
     	{
-    	    img = ImageIO.read(new File("/Users/Jem/Desktop/workspace/risk/src/Images/" + fileName));
+    	    img = ImageIO.read(new File("images/" + fileName));
     	} 
     	catch (IOException e) 
     	{

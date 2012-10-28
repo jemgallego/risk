@@ -1,25 +1,16 @@
-//////////////////////////////////////////////////////////////////////////////////
-//								RISK PROJECT									//
-//								  CECS 343										//
-//------------------------------------------------------------------------------//
-//								TEAM MEMBERS:									//
-//								Joseph Buss										//
-//								John Gallego									//
-//								Jonathan Stoner									//
-//////////////////////////////////////////////////////////////////////////////////
+// Risk Project - CECS 343
+// Joseph Buss, John Gallego, Jonathan Stoner
+
 public class Army 
 {
-	private int owner = 0;
 	private int numberOfUnits = 0;
 	
 	public Army()
 	{
-		this.owner = 0;
 		this.numberOfUnits = 0;
 	}
 	public Army(int owner, int numberOfUnits)
 	{
-		this.owner = owner;
 		this.numberOfUnits = numberOfUnits;
 	}
 	

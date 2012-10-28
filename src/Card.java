@@ -1,34 +1,20 @@
-//////////////////////////////////////////////////////////////////////////////////
-//								RISK PROJECT									//
-//								  CECS 343										//
-//------------------------------------------------------------------------------//
-//								TEAM MEMBERS:									//
-//								Joseph Buss										//
-//								John Gallego									//
-//								Jonathan Stoner									//
-//////////////////////////////////////////////////////////////////////////////////
+// Risk Project - CECS 343
+// Joseph Buss, John Gallego, Jonathan Stoner
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 
+@SuppressWarnings("serial")
 public class Card extends JLabel
 {
-	//used for inputing images
-	private JFileChooser tempFC = new JFileChooser();
-
 	String type = "blank";
 	public Card(String cardType)
 	{
-		//initialize image file path
-		tempFC.setCurrentDirectory(new File("C:"));
-        String tempFP = tempFC.getCurrentDirectory().getAbsolutePath();
-        tempFC.setCurrentDirectory(new File(tempFP));
 
 		type = cardType;
 		this.setIcon(addIcon(type));
@@ -44,8 +30,7 @@ public class Card extends JLabel
     	BufferedImage img = null;
     	try 
     	{
-    	    img = ImageIO.read(new File(tempFC.getCurrentDirectory().getAbsolutePath()
-    				+ "\\src\\Images\\" + fileName));
+    	    img = ImageIO.read(new File("images/" + fileName));
     	} 
     	catch (IOException e) 
     	{
